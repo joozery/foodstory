@@ -1,14 +1,83 @@
+"use client";
 import Link from "next/link";
+import { useRef, useState, useEffect, useCallback } from "react";
+import useEmblaCarousel from "embla-carousel-react";
 import AccordionGallery from "@/components/ui/AccordionGallery";
 
 const items = [
-  { video: "/videohero/videoplayback.mp4", label: "ร้านอาหาร Full Service", emoji: "🍽️" },
-  { video: "/videohero/videoplayback.mp4", label: "คาเฟ่ & Specialty Coffee", emoji: "☕" },
-  { video: "/videohero/videoplayback.mp4", label: "บุฟเฟต์ & All You Can Eat", emoji: "🥘" },
-  { video: "/videohero/videoplayback.mp4", label: "เชนร้านอาหาร", emoji: "🏪" },
-  { video: "/videohero/videoplayback.mp4", label: "Food Truck & Pop-up", emoji: "🚚" },
-  { video: "/videohero/videoplayback.mp4", label: "ร้านอาหารญี่ปุ่น & อาหารนานาชาติ", emoji: "🍱" },
+  { video: "/videohero/videoplayback.mp4", label: "ร้านอาหาร Full Service" },
+  { video: "/videohero/videoplayback.mp4", label: "คาเฟ่ & Specialty Coffee" },
+  { video: "/videohero/videoplayback.mp4", label: "บุฟเฟต์ & All You Can Eat" },
+  { video: "/videohero/videoplayback.mp4", label: "เชนร้านอาหาร" },
+  { video: "/videohero/videoplayback.mp4", label: "Food Truck & Pop-up" },
+  { video: "/videohero/videoplayback.mp4", label: "ร้านอาหารญี่ปุ่น & อาหารนานาชาติ" },
 ];
+
+function MobileGallery() {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, align: "center", dragFree: false });
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    const idx = emblaApi.selectedScrollSnap();
+    setSelectedIndex(idx);
+    videoRefs.current.forEach((v, i) => {
+      if (!v) return;
+      if (i === idx) v.play().catch(() => {});
+      else { v.pause(); v.currentTime = 0; }
+    });
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    emblaApi.on("select", onSelect);
+    onSelect();
+    return () => { emblaApi.off("select", onSelect); };
+  }, [emblaApi, onSelect]);
+
+  return (
+    <div className="lg:hidden -mx-4 sm:-mx-6">
+      <div className="overflow-hidden" ref={emblaRef}>
+        <div className="flex gap-3 px-6">
+          {items.map((item, i) => (
+            <div key={i} className="flex-none w-[78vw] sm:w-[60vw]">
+              <div className="relative rounded-2xl overflow-hidden bg-black" style={{ aspectRatio: "9/14" }}>
+                <video
+                  ref={(el) => { videoRefs.current[i] = el; }}
+                  src={item.video}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  muted loop playsInline
+                  autoPlay={i === 0}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-4">
+                  <p className="text-base font-bold text-white leading-snug">{item.label}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Dots */}
+      <div className="flex justify-center gap-1.5 mt-4 px-4">
+        {items.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => emblaApi?.scrollTo(i)}
+            className="rounded-full transition-all duration-300"
+            style={{
+              width: i === selectedIndex ? 20 : 6,
+              height: 6,
+              background: i === selectedIndex ? "#FF6231" : "#E2E8F0",
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function HomeGallery() {
   return (
@@ -18,7 +87,7 @@ export default function HomeGallery() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         {/* Header */}
-        <div className="flex items-end justify-between mb-10 gap-4 flex-wrap">
+        <div className="flex items-end justify-between mb-8 lg:mb-10 gap-4 flex-wrap">
           <div>
             <p className="text-xs font-bold text-[#FF6231] uppercase tracking-widest mb-3">Case Studies</p>
             <h2 className="text-3xl lg:text-4xl font-bold text-[#0F172A]">
@@ -36,30 +105,10 @@ export default function HomeGallery() {
           </Link>
         </div>
 
-        {/* Mobile list */}
-        <div className="lg:hidden space-y-2.5">
-          {items.map((item, i) => (
-            <Link
-              key={i}
-              href="/solutions"
-              className="flex items-center gap-4 bg-white rounded-2xl px-4 py-4 shadow-sm border border-[#FFE8DC] hover:border-[#FF6231] transition-colors group"
-            >
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-xl"
-                style={{ background: "linear-gradient(135deg, #FFF0EB, #FFD5C2)" }}>
-                {item.emoji}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-[#0F172A] leading-snug">{item.label}</p>
-                <p className="text-xs text-[#94A3B8] mt-0.5">ดูโซลูชันสำหรับร้านนี้</p>
-              </div>
-              <svg className="w-4 h-4 text-[#CBD5E1] group-hover:text-[#FF6231] transition-colors shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </Link>
-          ))}
-        </div>
+        {/* Mobile: video carousel */}
+        <MobileGallery />
 
-        {/* Desktop accordion */}
+        {/* Desktop: accordion */}
         <div className="hidden lg:block">
           <AccordionGallery
             items={items}
