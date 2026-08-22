@@ -36,20 +36,26 @@ export default function HomeGallery() {
           </Link>
         </div>
 
-        {/* Mobile grid */}
-        <div className="lg:hidden grid grid-cols-2 gap-3">
+        {/* Mobile list */}
+        <div className="lg:hidden space-y-2.5">
           {items.map((item, i) => (
-            <div key={i} className="relative rounded-2xl overflow-hidden h-36 sm:h-44 bg-[#0F172A]">
-              <video
-                src={item.video}
-                className="absolute inset-0 w-full h-full object-cover opacity-60"
-                autoPlay muted loop playsInline
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-3">
-                <p className="text-sm font-bold text-white leading-snug">{item.label}</p>
+            <Link
+              key={i}
+              href="/solutions"
+              className="flex items-center gap-4 bg-white rounded-2xl px-4 py-4 shadow-sm border border-[#FFE8DC] hover:border-[#FF6231] transition-colors group"
+            >
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-xl"
+                style={{ background: "linear-gradient(135deg, #FFF0EB, #FFD5C2)" }}>
+                {item.emoji}
               </div>
-            </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-[#0F172A] leading-snug">{item.label}</p>
+                <p className="text-xs text-[#94A3B8] mt-0.5">ดูโซลูชันสำหรับร้านนี้</p>
+              </div>
+              <svg className="w-4 h-4 text-[#CBD5E1] group-hover:text-[#FF6231] transition-colors shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
           ))}
         </div>
 
