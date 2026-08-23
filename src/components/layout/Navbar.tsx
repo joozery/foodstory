@@ -34,10 +34,27 @@ export default function Navbar() {
   const [activeMega, setActiveMega] = useState<MegaMenuKey>(null);
   const [activeProduct, setActiveProduct] = useState<string>("pos");
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileVisible, setMobileVisible] = useState(false);
   const [mobileSection, setMobileSection] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  function openMobile() {
+    setMobileOpen(true);
+    requestAnimationFrame(() => requestAnimationFrame(() => setMobileVisible(true)));
+  }
+
+  function closeMobile() {
+    setMobileVisible(false);
+    closeTimer.current = setTimeout(() => {
+      setMobileOpen(false);
+      setMobileSection(null);
+    }, 380);
+  }
+
+  useEffect(() => () => { if (closeTimer.current) clearTimeout(closeTimer.current); }, []);
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
@@ -190,7 +207,7 @@ export default function Navbar() {
             {/* Mobile hamburger */}
             <button
               className="lg:hidden p-2 rounded-lg text-[#475569] hover:bg-[#F1F5F9]"
-              onClick={() => { setMobileOpen(!mobileOpen); setActiveMega(null); }}
+              onClick={() => { mobileOpen ? closeMobile() : openMobile(); setActiveMega(null); }}
               aria-label="Toggle menu"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -548,77 +565,155 @@ export default function Navbar() {
         )}
       </nav>
 
-      {/* ── MOBILE MENU ─────────────────────────────── */}
+      {/* ── MOBILE MENU OVERLAY ─────────────────────── */}
       {mobileOpen && (
-        <div className="lg:hidden bg-white border-t border-[#E2E8F0] shadow-xl overflow-y-auto max-h-[80vh]">
-          <div className="px-4 py-4 space-y-1">
-            {/* สินค้าและบริการ */}
-            <button
-              onClick={() => setMobileSection(mobileSection === "solutions" ? null : "solutions")}
-              className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold text-[#0F172A] hover:bg-[#F8FAFC]"
-            >
-              สินค้าและบริการ <ChevronDown open={mobileSection === "solutions"} />
-            </button>
-            {mobileSection === "solutions" && (
-              <div className="ml-3 space-y-1 pb-2">
-                {solutionsNav.flatMap((g) => g.items).map((item) => (
-                  <Link
-                    key={item.slug}
-                    href={`/solutions/${item.slug}`}
-                    onClick={() => setMobileOpen(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-[#475569] hover:text-[#FF6231] hover:bg-[#FFF0EB]"
-                  >
-                    <span className="w-1 h-1 rounded-full bg-[#FF6231] shrink-0" />
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            )}
+        <div className="lg:hidden fixed inset-0 z-[60] flex">
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
+            style={{ opacity: mobileVisible ? 1 : 0 }}
+            onClick={closeMobile}
+          />
 
-            {/* ประเภทร้าน */}
-            <button
-              onClick={() => setMobileSection(mobileSection === "features" ? null : "features")}
-              className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-semibold text-[#0F172A] hover:bg-[#F8FAFC]"
-            >
-              ประเภทร้าน <ChevronDown open={mobileSection === "features"} />
-            </button>
-            {mobileSection === "features" && (
-              <div className="ml-3 space-y-1 pb-2">
-                {featuresNav.flatMap((g) => g.items).map((item) => (
-                  <Link
-                    key={item.slug}
-                    href={`/features/${item.slug}`}
-                    onClick={() => setMobileOpen(false)}
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-[#475569] hover:text-[#FF6231] hover:bg-[#FFF0EB]"
-                  >
-                    <span className="w-1 h-1 rounded-full bg-[#FF6231] shrink-0" />
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            )}
-
-            {[
-              { href: "/hardware", label: "ฮาร์ดแวร์" },
-              { href: "/pricing", label: "ราคา" },
-              { href: "/articles", label: "คลังความรู้" },
-              { href: "/help", label: "ช่วยเหลือ" },
-            ].map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="block px-3 py-2.5 rounded-xl text-sm font-semibold text-[#0F172A] hover:bg-[#F8FAFC]"
+          {/* Panel */}
+          <div
+            className="relative ml-auto w-full sm:w-[340px] bg-white h-full flex flex-col shadow-2xl transition-transform duration-[380ms] ease-[cubic-bezier(0.32,0.72,0,1)]"
+            style={{ transform: mobileVisible ? "translateX(0)" : "translateX(100%)" }}
+          >
+            {/* Panel header */}
+            <div className="flex items-center justify-between px-5 py-4 border-b border-[#F1F5F9]">
+              <img src="/logo/WNFS_Logo.svg" alt="Wongnai FoodStory POS" className="h-6 w-auto" />
+              <button
+                onClick={closeMobile}
+                className="w-8 h-8 rounded-full bg-[#F1F5F9] hover:bg-[#E2E8F0] flex items-center justify-center transition-colors"
+                aria-label="ปิดเมนู"
               >
-                {link.label}
-              </Link>
-            ))}
+                <svg className="w-4 h-4 text-[#475569]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
 
-            <div className="pt-3 border-t border-[#E2E8F0] flex flex-col gap-2">
-              <a href="#" className="block text-center text-sm font-medium text-[#334155] py-2.5 rounded-xl hover:bg-[#F8FAFC]">
+            {/* Nav items — scrollable */}
+            <div className="flex-1 overflow-y-auto px-4 py-3">
+
+              {/* Accordion: สินค้าและบริการ */}
+              {[
+                {
+                  key: "solutions",
+                  label: "สินค้าและบริการ",
+                  icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />,
+                  items: solutionsNav.flatMap((g) => g.items).map((i) => ({ label: i.name, href: `/solutions/${i.slug}` })),
+                },
+                {
+                  key: "features",
+                  label: "ประเภทร้าน",
+                  icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />,
+                  items: featuresNav.flatMap((g) => g.items).map((i) => ({ label: i.name, href: `/features/${i.slug}` })),
+                },
+              ].map((section, si) => {
+                const isOpen = mobileSection === section.key;
+                return (
+                  <div
+                    key={section.key}
+                    className="transition-all duration-500"
+                    style={{
+                      opacity: mobileVisible ? 1 : 0,
+                      transform: mobileVisible ? "translateY(0)" : "translateY(14px)",
+                      transitionDelay: mobileVisible ? `${si * 60}ms` : "0ms",
+                    }}
+                  >
+                    <button
+                      onClick={() => setMobileSection(isOpen ? null : section.key)}
+                      className="w-full flex items-center gap-3 px-3 py-3.5 rounded-xl transition-colors hover:bg-[#F8FAFC] group"
+                    >
+                      <span className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${isOpen ? "bg-[#FF6231] text-white" : "bg-[#F1F5F9] text-[#64748B]"}`}>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          {section.icon}
+                        </svg>
+                      </span>
+                      <span className={`flex-1 text-left text-sm font-semibold transition-colors ${isOpen ? "text-[#FF6231]" : "text-[#0F172A]"}`}>
+                        {section.label}
+                      </span>
+                      <ChevronDown open={isOpen} />
+                    </button>
+
+                    <div
+                      className="overflow-hidden"
+                      style={{ maxHeight: isOpen ? `${section.items.length * 44}px` : "0", transition: "max-height 0.35s cubic-bezier(0.4,0,0.2,1)" }}
+                    >
+                      <div className="ml-11 mb-2 space-y-0.5 border-l-2 border-[#FFE4D9] pl-3">
+                        {section.items.map((item) => (
+                          <Link
+                            key={item.href}
+                            href={item.href}
+                            onClick={closeMobile}
+                            className="flex items-center gap-2 py-2 px-2 rounded-lg text-sm text-[#475569] hover:text-[#FF6231] hover:bg-[#FFF8F5] transition-colors"
+                          >
+                            <span className="w-1 h-1 rounded-full bg-[#FDBA9B] shrink-0" />
+                            {item.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+
+              {/* Simple links */}
+              {[
+                { href: "/hardware", label: "ฮาร์ดแวร์", icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /> },
+                { href: "/pricing", label: "ราคา", icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /> },
+                { href: "/articles", label: "คลังความรู้", icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /> },
+                { href: "/help", label: "ช่วยเหลือ", icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" /> },
+              ].map((link, li) => (
+                <div
+                  key={link.href}
+                  className="transition-all duration-500"
+                  style={{
+                    opacity: mobileVisible ? 1 : 0,
+                    transform: mobileVisible ? "translateY(0)" : "translateY(14px)",
+                    transitionDelay: mobileVisible ? `${(li + 2) * 60}ms` : "0ms",
+                  }}
+                >
+                  <Link
+                    href={link.href}
+                    onClick={closeMobile}
+                    className="flex items-center gap-3 px-3 py-3.5 rounded-xl text-sm font-semibold text-[#0F172A] hover:bg-[#F8FAFC] transition-colors group"
+                  >
+                    <span className="w-8 h-8 rounded-lg bg-[#F1F5F9] flex items-center justify-center text-[#64748B] shrink-0 group-hover:bg-[#FFF0EB] group-hover:text-[#FF6231] transition-colors">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        {link.icon}
+                      </svg>
+                    </span>
+                    <span className="flex-1">{link.label}</span>
+                    <svg className="w-4 h-4 text-[#CBD5E1] group-hover:text-[#FF6231] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                </div>
+              ))}
+            </div>
+
+            {/* Bottom CTA */}
+            <div
+              className="px-4 py-4 border-t border-[#F1F5F9] space-y-2.5 transition-all duration-500"
+              style={{
+                opacity: mobileVisible ? 1 : 0,
+                transform: mobileVisible ? "translateY(0)" : "translateY(10px)",
+                transitionDelay: mobileVisible ? "360ms" : "0ms",
+              }}
+            >
+              <a href="#" className="flex items-center justify-center gap-2 py-3 rounded-xl border border-[#E2E8F0] text-sm font-semibold text-[#334155] hover:bg-[#F8FAFC] transition-colors">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
                 เข้าสู่ระบบ
               </a>
-              <Link href="/contact" onClick={() => setMobileOpen(false)} className="block text-center text-sm font-semibold text-white py-2.5 btn-orange rounded-xl">
+              <Link href="/contact" onClick={closeMobile} className="flex items-center justify-center gap-2 py-3 rounded-xl btn-orange text-sm font-semibold text-white shadow-sm">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
                 ขอราคา / ทดลองใช้ฟรี
               </Link>
             </div>
