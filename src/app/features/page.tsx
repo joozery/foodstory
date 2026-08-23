@@ -19,10 +19,10 @@ export default function FeaturesHubPage() {
         <section className="bg-[#F8FAFC] py-16 border-b border-[#E2E8F0]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
             <SectionLabel>Product & Features</SectionLabel>
-            <h1 className="text-4xl lg:text-5xl font-bold text-[#0F172A] mb-5">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F172A] mb-5">
               ทุกฟีเจอร์ที่ร้านอาหารต้องการ
             </h1>
-            <p className="text-xl text-[#64748B] max-w-3xl mx-auto">
+            <p className="text-base sm:text-xl text-[#64748B] max-w-3xl mx-auto">
               ออกแบบมาเพื่อร้านอาหารไทยโดยเฉพาะ ใช้งานง่าย ครบครัน และพร้อม Scale กับธุรกิจคุณ
             </p>
           </div>

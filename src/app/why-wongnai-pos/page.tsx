@@ -29,10 +29,10 @@ export default function WhyWongnaiPOSPage() {
           </div>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 text-center">
             <SectionLabel>Why Wongnai POS</SectionLabel>
-            <h1 className="text-4xl lg:text-5xl font-bold text-white mt-4 mb-6">
-              ทำไมร้านอาหาร 10,000+ แห่ง<br />ถึงเลือก Wongnai POS?
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mt-4 mb-6">
+              ทำไมร้านอาหาร 10,000+ แห่ง<br className="hidden sm:block" />ถึงเลือก Wongnai POS?
             </h1>
-            <p className="text-xl text-[#94A3B8] max-w-3xl mx-auto">
+            <p className="text-base sm:text-xl text-[#94A3B8] max-w-3xl mx-auto">
               ไม่ใช่แค่ POS ทั่วไป — เราเป็นพาร์ทเนอร์ที่เข้าใจธุรกิจร้านอาหารไทยดีที่สุด
             </p>
           </div>

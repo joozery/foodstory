@@ -13,8 +13,8 @@ export default function GetQuotePage() {
         <section className="bg-[#F8FAFC] py-16 border-b border-[#E2E8F0]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
             <SectionLabel>Lead Generation</SectionLabel>
-            <h1 className="text-4xl lg:text-5xl font-bold text-[#0F172A] mb-5">ขอใบเสนอราคา</h1>
-            <p className="text-xl text-[#64748B] max-w-2xl mx-auto">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F172A] mb-5">ขอใบเสนอราคา</h1>
+            <p className="text-base sm:text-xl text-[#64748B] max-w-2xl mx-auto">
               กรอกข้อมูลร้านของคุณ ทีมผู้เชี่ยวชาญจะติดต่อกลับภายใน 24 ชั่วโมง
             </p>
           </div>
@@ -22,7 +22,7 @@ export default function GetQuotePage() {
 
         <section className="py-16 bg-white">
           <div className="max-w-3xl mx-auto px-4 sm:px-6">
-            <div className="bg-white rounded-2xl border border-[#E2E8F0] shadow-sm p-8">
+            <div className="bg-white rounded-2xl border border-[#E2E8F0] shadow-sm p-5 sm:p-8">
               <form className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>

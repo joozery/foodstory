@@ -15,10 +15,10 @@ export default function AboutPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
             <div className="max-w-3xl">
               <SectionLabel>เกี่ยวกับ Wongnai POS</SectionLabel>
-              <h1 className="text-4xl lg:text-5xl font-bold text-white mt-4 mb-6">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mt-4 mb-6">
                 เราเชื่อว่าเทคโนโลยีที่ดีทำให้ร้านอาหารไทยเติบโตได้
               </h1>
-              <p className="text-xl text-[#94A3B8] leading-relaxed">
+              <p className="text-base sm:text-xl text-[#94A3B8] leading-relaxed">
                 Wongnai POS (เดิมชื่อ FoodStory) เป็นผลิตภัณฑ์ภายใต้บริษัท Wongnai Media Co., Ltd. (LINE MAN Wongnai) ผู้นำด้านเทคโนโลยีอาหารในประเทศไทย
               </p>
             </div>

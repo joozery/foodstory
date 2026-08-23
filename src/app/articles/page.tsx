@@ -25,8 +25,8 @@ export default function ArticlesPage() {
         <section className="bg-[#F8FAFC] py-16 border-b border-[#E2E8F0]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
             <SectionLabel>Resource Center</SectionLabel>
-            <h1 className="text-4xl lg:text-5xl font-bold text-[#0F172A] mb-5">บทความ & ทรัพยากร</h1>
-            <p className="text-xl text-[#64748B] max-w-2xl mx-auto">คู่มือ เทคนิค และข่าวสารสำหรับเจ้าของร้านอาหารที่ต้องการเติบโต</p>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F172A] mb-5">บทความ & ทรัพยากร</h1>
+            <p className="text-base sm:text-xl text-[#64748B] max-w-2xl mx-auto">คู่มือ เทคนิค และข่าวสารสำหรับเจ้าของร้านอาหารที่ต้องการเติบโต</p>
           </div>
         </section>
 

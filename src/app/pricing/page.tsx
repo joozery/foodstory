@@ -17,10 +17,10 @@ export default function PricingPage() {
         <section className="bg-[#F8FAFC] py-16 border-b border-[#E2E8F0]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
             <SectionLabel>ราคาโปร่งใส ไม่มีค่าใช้จ่ายซ่อน</SectionLabel>
-            <h1 className="text-4xl lg:text-5xl font-bold text-[#0F172A] mb-5">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F172A] mb-5">
               เลือกแพ็กเกจที่เหมาะกับคุณ
             </h1>
-            <p className="text-xl text-[#64748B] max-w-2xl mx-auto mb-8">
+            <p className="text-base sm:text-xl text-[#64748B] max-w-2xl mx-auto mb-8">
               ทดลองใช้ฟรี 30 วัน ไม่ต้องใส่บัตรเครดิต ยกเลิกได้ทุกเมื่อ
             </p>
             {/* Billing toggle */}
@@ -49,7 +49,7 @@ export default function PricingPage() {
               {plans.map((plan) => (
                 <div
                   key={plan.id}
-                  className={`rounded-2xl p-8 flex flex-col relative border transition-all ${plan.popular ? "border-[#FF6231] shadow-2xl shadow-orange-100" : "border-[#E2E8F0]"}`}
+                  className={`rounded-2xl p-5 sm:p-8 flex flex-col relative border transition-all ${plan.popular ? "border-[#FF6231] shadow-2xl shadow-orange-100" : "border-[#E2E8F0]"}`}
                 >
                   {plan.popular && (
                     <div className="absolute -top-4 left-1/2 -translate-x-1/2">
@@ -68,7 +68,7 @@ export default function PricingPage() {
                     {plan.monthlyPrice ? (
                       <>
                         <div className="flex items-baseline gap-1">
-                          <span className="text-5xl font-bold text-[#0F172A]">
+                          <span className="text-4xl sm:text-5xl font-bold text-[#0F172A]">
                             ฿{(isYearly ? plan.yearlyPrice! : plan.monthlyPrice).toLocaleString()}
                           </span>
                           <span className="text-[#94A3B8] text-sm">/ เดือน</span>

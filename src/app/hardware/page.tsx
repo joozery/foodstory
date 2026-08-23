@@ -33,8 +33,8 @@ export default function HardwarePage() {
         <section className="bg-[#F8FAFC] py-16 border-b border-[#E2E8F0]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
             <SectionLabel>Hardware</SectionLabel>
-            <h1 className="text-4xl lg:text-5xl font-bold text-[#0F172A] mb-5">อุปกรณ์ POS ครบชุด พร้อมใช้งานทันที</h1>
-            <p className="text-xl text-[#64748B] max-w-2xl mx-auto">อุปกรณ์ที่ผ่านการทดสอบและรับประกันการทำงานร่วมกับ Wongnai POS</p>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0F172A] mb-5">อุปกรณ์ POS ครบชุด พร้อมใช้งานทันที</h1>
+            <p className="text-base sm:text-xl text-[#64748B] max-w-2xl mx-auto">อุปกรณ์ที่ผ่านการทดสอบและรับประกันการทำงานร่วมกับ Wongnai POS</p>
           </div>
         </section>
 

@@ -58,10 +58,10 @@ export default async function SolutionDetailPage({ params }: Props) {
                   <NavIcon icon={sol.icon} className="w-8 h-8" strokeWidth={1.5} />
                 </div>
                 <SectionLabel>{sol.shortName}</SectionLabel>
-                <h1 className="text-4xl lg:text-5xl font-bold text-white mt-3 mb-5 leading-tight">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mt-3 mb-5 leading-tight">
                   {sol.tagline}
                 </h1>
-                <p className="text-lg text-[#94A3B8] leading-relaxed mb-8">
+                <p className="text-base sm:text-lg text-[#94A3B8] leading-relaxed mb-8">
                   {sol.description}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3">

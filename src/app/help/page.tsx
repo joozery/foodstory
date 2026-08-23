@@ -49,8 +49,8 @@ export default function HelpPage() {
         <section className="bg-[#080D17] py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
             <SectionLabel>Help Center</SectionLabel>
-            <h1 className="text-4xl lg:text-5xl font-bold text-white mb-5">เราพร้อมช่วยเหลือคุณ</h1>
-            <p className="text-xl text-[#94A3B8] max-w-2xl mx-auto mb-8">ค้นหาคำตอบ คู่มือ และวิธีแก้ไขปัญหาสำหรับ Wongnai POS</p>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-5">เราพร้อมช่วยเหลือคุณ</h1>
+            <p className="text-base sm:text-xl text-[#94A3B8] max-w-2xl mx-auto mb-8">ค้นหาคำตอบ คู่มือ และวิธีแก้ไขปัญหาสำหรับ Wongnai POS</p>
             <div className="max-w-xl mx-auto">
               <div className="flex items-center gap-3 bg-white rounded-xl px-4 py-3 shadow-lg">
                 <svg className="w-5 h-5 text-[#94A3B8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
