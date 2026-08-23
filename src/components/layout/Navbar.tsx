@@ -191,7 +191,9 @@ export default function Navbar() {
             {/* CTA buttons */}
             <div className="hidden lg:flex items-center gap-2">
               <a
-                href="#"
+                href="https://owner.foodstory.co/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-sm font-medium text-[#334155] px-3 py-2 rounded-lg hover:bg-[#F8FAFC] hover:text-[#0F172A] transition-colors"
               >
                 เข้าสู่ระบบ
@@ -704,7 +706,7 @@ export default function Navbar() {
                 transitionDelay: mobileVisible ? "360ms" : "0ms",
               }}
             >
-              <a href="#" className="flex items-center justify-center gap-2 py-3 rounded-xl border border-[#E2E8F0] text-sm font-semibold text-[#334155] hover:bg-[#F8FAFC] transition-colors">
+              <a href="https://owner.foodstory.co/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 py-3 rounded-xl border border-[#E2E8F0] text-sm font-semibold text-[#334155] hover:bg-[#F8FAFC] transition-colors">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
